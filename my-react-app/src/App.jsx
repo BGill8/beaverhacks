@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useRef } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [recording, setRecording] = useState(false);
+    const [audioChunks, setAudioChunks] = useState([]);
+    const mediaRecorder = useRef(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const startRecording = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder.current = new MediaRecorder(stream);
+
+            mediaRecorder.current.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    setAudioChunks((prevChunks) => [...prevChunks, event.data]);
+                }
+            };
+
+            mediaRecorder.current.onstop = async () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const base64Audio = await blobToBase64(audioBlob);
+
+                try {
+                    const response = await fetch('/transcribe', { // your backend endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ audioData: base64Audio }),
+                    });
+
+                    const result = await response.json();
+                    console.log(result); // Handle the response from your backend
+                    setAudioChunks([]); // clear the audio chunks after sending.
+                } catch (error) {
+                    console.error('Error sending audio to backend:', error);
+                }
+            };
+
+            mediaRecorder.current.start();
+            setRecording(true);
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+        }
+    };
+
+    const stopRecording = () => {
+        if (mediaRecorder.current) {
+            mediaRecorder.current.stop();
+            setRecording(false);
+        }
+    };
+
+    const blobToBase64 = (blob) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]); // Extract base64 part
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    return (
+        <div>
+            <button onClick={recording ? stopRecording : startRecording}>
+                {recording ? 'Stop Recording' : 'Start Recording'}
+            </button>
+        </div>
+    );
 }
 
-export default App
+export default App;
