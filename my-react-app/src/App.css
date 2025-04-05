@@ -5,15 +5,34 @@
   text-align: center;
 }
 
+header {
+  align-items: center;
+  position: relative;
+  margin-top: 0; /* Remove any default margin-top */
+  padding-top: 0; /* Remove any padding-top, if set */
+}
+
+/* Add minimal line under header and move it closer to the top */
+header::after {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 2px;
+  background-color: #ff6600; /* Bright orange color for the line */
+  margin: 5px auto 0; /* Reduce top margin to bring the line closer to the header */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -34,7 +53,18 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: row;
   padding: 2em;
+  border-radius: 2em;
+  margin-bottom: 20px;
+}
+
+.divider {
+  width: 1 px;
+  height: 100%;
+  background-color: #eaeaea;
+  margin: 0 20px;
 }
 
 .read-the-docs {
