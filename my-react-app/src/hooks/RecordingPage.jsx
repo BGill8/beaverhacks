@@ -64,6 +64,7 @@ const useSpeechToText = (options) => {
         const elem = document.getElementById("speech")
         const string = elem.textContent
         console.log(string)
+        return string
   }
 
     return {

@@ -6,6 +6,7 @@ import './RecordingPage.css'; // Import your CSS file
 const VoiceInput = () => {
   const [textInput, setTextInput] = useState('');
   const navigate = useNavigate(); // Initialize navigate
+  var speechToText = ''
 
   const { isListening, transcript, startListening, getSpeechString, stopListening } = useSpeechToText({ continuous: true });
 
@@ -14,12 +15,15 @@ const VoiceInput = () => {
   };
 
   const stopVoiceInput = () => {
-    setTextInput((prevVal) =>
-      prevVal + (transcript.length ? (prevVal.length ? ' ' : '') + transcript : '')
-    );
-    getSpeechString();
+    speechToText = getSpeechString();
+    console.log(speechToText)
     stopListening();
+    document.getElementById('speech').value = ''
   };
+
+ // setTextInput((prevVal) =>
+ //   prevVal + (transcript.length ? (prevVal.length ? ' ' : '') + transcript : '')
+ // );
 
   return (
     <div>
