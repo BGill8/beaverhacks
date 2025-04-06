@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import beavernoteslogo from './assets/beavernotes.svg';
 import './App.css';
 import RecordingPage from './pages/RecordingPage';
-import UploadPage from './pages/UploadPage';
 
 function HomePage({ setCount, count }) {
   return (
@@ -20,14 +19,9 @@ function HomePage({ setCount, count }) {
 
       <div className="card">
         <Link to="/recording">
-          <button>Start Recording</button>
+          <button className="record-button">Start Recording</button>
         </Link>
         <div className="divider"></div>
-        <Link to="/upload">
-          <button>
-            Upload <code>.txt</code> file
-          </button>
-        </Link>
       </div>
     </>
   );
@@ -41,7 +35,6 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage count={count} setCount={setCount} />} />
         <Route path="/recording" element={<RecordingPage />} />
-        <Route path="/upload" element={<UploadPage />} />
       </Routes>
     </BrowserRouter>
   );

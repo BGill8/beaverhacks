@@ -70,3 +70,9 @@ header::after {
 .read-the-docs {
   color: #888;
 }
+
+.record-button {
+  margin: 0 25px;
+  width: 100%;
+  text-align: center;
+}
