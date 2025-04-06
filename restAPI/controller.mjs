@@ -4,13 +4,14 @@ import { body, validationResult } from 'express-validator';
 import asyncHandler from 'express-async-handler';
 import * as model from './model.mjs'; 
 
+
+
 const app = express();
-//const PORT = process.env.PORT || 5174;
 const PORT = process.env.PORT;
 
 app.use(express.json());
 
-app.listen(PORT, async () => {
+app.listen(3000, async () => {
   try {
     await model.connect();
     console.log(`Server listening on port ${PORT}...`);
@@ -45,8 +46,13 @@ app.post('/gemini-process',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const newText = await model.geminiResp(dataToSummarize); 
-    res.status(201).json(newText); 
+    // Ensure dataToSummarize is a string
+    const dataToSummarizeString = String(req.body.dataToSummarize); // or req.body.dataToSummarize.toString()
+    
+    // Call geminiResp with the stringified data
+    const newText = await model.geminiResp(dataToSummarizeString);
+    res.status(201).json(newText);
   })
 );
+
 

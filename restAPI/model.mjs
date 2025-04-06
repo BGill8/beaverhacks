@@ -22,7 +22,7 @@ async function geminiResp(data) {
     model: "gemini-2.0-flash",
     contents: "Summarize in detailed notes: " + data,
   });
-  console.log(response.data);
+  console.log(response.text);
 }
 
 const textSchema = new mongoose.Schema({

@@ -1,18 +1,13 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/text': {
-        // Here you configure the url of your backend
-        target: 'http://localhost:5173',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
+      '/gemini-process': 'http://localhost:3000', // Proxy requests to backend
+      '/text': 'http://localhost:3000'           // Add this for the '/text' endpoint as well
+    }
+  }
 });
+
