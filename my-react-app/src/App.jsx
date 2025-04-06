@@ -1,8 +1,37 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import beavernoteslogo from './assets/beavernotes.svg';
 import './App.css';
-import { Link, BrowserRouter, Routes, Route } from 'react-router-dom';
 import RecordingPage from './pages/RecordingPage';
+import UploadPage from './pages/UploadPage'; // Make sure this exists
+
+function HomePage({ setCount, count }) {
+  return (
+    <>
+      <div>
+        <header>
+          <h1>Beaver Notes</h1>
+          <p>Welcome to the automated notes generator</p>
+        </header>
+      </div>
+      <div>
+        <img src={beavernoteslogo} className="logo" alt="Beaver Notes Logo" />
+      </div>
+
+      <div className="card">
+        <Link to="/recording">
+          <button>Start Recording</button>
+        </Link>
+        <div className="divider"></div>
+        <Link to="/upload">
+          <button>
+            Upload <code>.txt</code> file
+          </button>
+        </Link>
+      </div>
+    </>
+  );
+}
 
 function App() {
   const [count, setCount] = useState(0);
@@ -10,39 +39,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <div>
-                <header>
-                  <h1>Beaver Notes</h1>
-                  <p>Welcome to the automated notes generator</p>
-                </header>
-              </div>
-              <div>
-                <div>
-                  <img src={beavernoteslogo} className="logo" alt="Vite logo" />
-                </div>
-              </div>
-
-              <div className="card">
-                <Link to="/recording">
-                  <button>Start Recording</button>
-                </Link>
-                <div className="divider"></div>
-                <button onClick={() => setCount((count) => count + 1)}>
-                  Upload <code>.txt</code> file
-                </button>
-              </div>
-            </>
-          }
-        />
+        <Route path="/" element={<HomePage count={count} setCount={setCount} />} />
         <Route path="/recording" element={<RecordingPage />} />
+        <Route path="/upload" element={<UploadPage />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

@@ -1,0 +1,21 @@
+.textbox-container {
+    margin-top: 1rem;
+  }
+  
+  .textbox {
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .textbox-container p {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+  }
+  
