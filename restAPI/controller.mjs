@@ -58,7 +58,7 @@ app.post('/gemini-process',
 
 //RETRIEVE DOCUMENT BY ID
 app.get('/texts/:id', asyncHandler(async(req, res) => {
-  const textGetId = await texts.getTextId(req.params.id); 
+  const textGetId = await model.getTextId(req.params.id); 
   if(!textGetId){ 
       return res.status(404).json({"Error": "Not found"});
   }
@@ -67,7 +67,7 @@ app.get('/texts/:id', asyncHandler(async(req, res) => {
 
 //RETRIEVE ALL DOCUMENTS
 app.get('/texts', asyncHandler(async(req, res) => {
-  const textGet = await texts.getText(req.query); 
+  const textGet = await model.getText(req.query); 
   res.status(200).json(textGet);  
 })); 
 

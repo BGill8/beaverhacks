@@ -12,6 +12,8 @@
   "dependencies": {
     "@google/genai": "^0.7.0",
     "@google/generative-ai": "^0.24.0",
+    "axios": "^1.8.4",
+    "html-react-parser": "^5.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -27,5 +29,3 @@
     "vite": "^6.2.0"
   }
 }
-
-
