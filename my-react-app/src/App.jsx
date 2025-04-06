@@ -40,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage count={count} setCount={setCount} />} />
         <Route path="/recording" element={<RecordingPage />} />
+        {/* <Route path="/upload" element={<UploadPage />} /> */}
       </Routes>
     </BrowserRouter>
   );
