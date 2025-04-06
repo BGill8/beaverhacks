@@ -4,7 +4,7 @@ import useSpeechToText from '../hooks/RecordingPage'
 const VoiceInput = () => {
     const [textInput, setTextInput] = useState('')
 
-    const {isListening, transcript, startListening, stopListening} = useSpeechToText({continuous: true})
+    const {isListening, transcript, startListening, getSpeechString, stopListening} = useSpeechToText({continuous: true})
     
     const startStopListening = () => {
       isListening ? stopVoiceInput() : startListening()
@@ -12,6 +12,7 @@ const VoiceInput = () => {
 
     const stopVoiceInput = () => {
       setTextInput(prevVal => prevVal + (transcript.length ? (prevVal.length ? ' ' : '') + transcript : ''))
+      getSpeechString()
       stopListening()
     }
     return (
@@ -19,7 +20,7 @@ const VoiceInput = () => {
         <button onClick = {()=> {startStopListening()}}>
           {isListening ? 'Stop Listening' : 'Speak'}
         </button>
-        <textarea style={{
+        <textarea id="speech" style={{
           marginTop: '20px',
           width: '100%',
           height: '150px'

@@ -54,16 +54,23 @@ const useSpeechToText = (options) => {
     }
 
     const stopListening = () => {
-        if(recognitionRef.current && !isListening) {
+        if(recognitionRef.current && isListening) {
             recognitionRef.current.stop()
             setIsListening(false)
         }
     }
 
+    const getSpeechString = () => {
+        const elem = document.getElementById("speech")
+        const string = elem.textContent
+        console.log(string)
+  }
+
     return {
         isListening,
         transcript,
         startListening,
+        getSpeechString,
         stopListening
     }  
 }
