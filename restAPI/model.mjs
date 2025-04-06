@@ -31,16 +31,7 @@ const textSchema = new mongoose.Schema({
 
 const Text = mongoose.model("text", textSchema);
 
-/*
-async function geminiResp(data) {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: "Summarize in one sentence smartly: " + data,
-  });
-  console.log(response.text);
 
-}
-*/
 
 async function geminiResp(data) {
   const result = await ai.models.generateContent({
@@ -55,10 +46,7 @@ async function geminiResp(data) {
 
 
 async function createText(textdata){
-/*
-  const text = new Text(textdata);
-  return await text.save();
-  */
+
 
     // Get Gemini note
     const note = await geminiResp(textdata.text);
@@ -72,5 +60,16 @@ async function createText(textdata){
     return await text.save();
 }
 
-export { connect, createText, geminiResp};
+
+async function getTextId(textID){
+  return await Text.findById(textID) //this retrieves an ID from a document 
+}
+
+
+async function getText(textQuery){
+  return await Text.find(textQuery) //this searches MongoDB's database 'Text' collection for any documents that matches
+}
+
+
+export { connect, createText, geminiResp, getTextId, getText};
 
