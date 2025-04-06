@@ -82,6 +82,25 @@ const useSpeechToText = (options) => {
       console.error('Error sending speech string:', error);
       alert('An error occurred while sending the request.');
     }
+
+    try {
+      const response = await fetch(`/gemini-process`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ dataToSummarize: string }),
+      });
+
+      if (response.status === 201) {
+        alert('Successfully added the text');
+      } else {
+        alert('Failed to add text, status code = ' + response.status);
+      }
+    } catch (error) {
+      console.error('Error sending speech string:', error);
+      alert('An error occurred while sending the request.');
+    }
   };
 
   return {

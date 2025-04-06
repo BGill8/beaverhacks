@@ -39,7 +39,6 @@ const Text = mongoose.model("text", textSchema);
 async function createText(textdata){
 
   const text = new Text(textdata);
-  geminiResp(text)
   return await text.save();
 }
 

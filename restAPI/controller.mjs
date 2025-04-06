@@ -40,17 +40,13 @@ app.post('/gemini-process',
   body('dataToSummarize').notEmpty().withMessage('Data to summarize is required'),
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { dataToSummarize } = req.body;
-
-    // Call the geminiResp function from your model
-    await model.geminiResp(dataToSummarize);
-
-    // Send a success response back to the frontend
-    res.status(200).json({ message: 'Gemini API called and response logged.' });
+    const newText = await model.geminiResp(dataToSummarize); 
+    res.status(201).json(newText); 
   })
 );
 

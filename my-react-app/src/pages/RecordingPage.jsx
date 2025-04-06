@@ -12,7 +12,7 @@ const VoiceInput = () => {
     transcript,
     startListening,
     getSpeechString,
-    stopListening
+    stopListening,
   } = useSpeechToText({ continuous: true });
 
   const startStopListening = () => {
