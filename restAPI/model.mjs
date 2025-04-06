@@ -15,4 +15,21 @@ async function connect() {
   }
 }
 
-export { connect };
+
+const textSchema = new mongoose.Schema({
+  text: {
+    type: String,
+    required: true,
+  },
+});
+
+
+const Text = mongoose.model("text", textSchema);
+
+
+async function createText(textdata){
+  const text = new Text(textdata);
+  return await text.save();
+}
+
+export { connect, createText};

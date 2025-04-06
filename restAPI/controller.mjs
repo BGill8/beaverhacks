@@ -28,8 +28,8 @@ app.post('/text',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const newTextFile = await model.createTextFile(req.body); 
-    res.status(201).json(newTextFile); 
+    const newText = await model.createText(req.body); 
+    res.status(201).json(newText); 
   })
 );
 
