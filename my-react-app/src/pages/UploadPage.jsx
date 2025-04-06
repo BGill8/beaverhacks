@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "./UploadPage.css"; // Import your CSS file
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -73,9 +74,8 @@ const UploadPage = () => {
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>Upload and Summarize</h1>
       {/* Back button */}
-      <button onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
-        Back
-      </button>
+      <button className='backButton' onClick={() => navigate(-1)}>Back</button>
+
       <input type="file" onChange={handleFileChange} />
       {loadingSummary && <p>Summarizing...</p>}
       {selectedFile && (
