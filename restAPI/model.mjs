@@ -17,6 +17,21 @@ async function connect() {
   }
 }
 
+const textSchema = new mongoose.Schema({
+  text: {
+    type: String,
+    required: true,
+  },
+  note: {
+    type: String,
+    required: false,
+  },
+});
+
+
+const Text = mongoose.model("text", textSchema);
+
+
 async function geminiResp(data) {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
@@ -25,15 +40,6 @@ async function geminiResp(data) {
   console.log(response.text);
 }
 
-const textSchema = new mongoose.Schema({
-  text: {
-    type: String,
-    required: true,
-  },
-});
-
-
-const Text = mongoose.model("text", textSchema);
 
 
 async function createText(textdata){
