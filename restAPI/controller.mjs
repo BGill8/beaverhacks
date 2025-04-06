@@ -1,10 +1,12 @@
+
 import express from 'express'; 
 import { body, validationResult } from 'express-validator';
 import asyncHandler from 'express-async-handler';
 import * as model from './model.mjs'; 
 
 const app = express();
-const PORT = process.env.PORT || 5174;
+//const PORT = process.env.PORT || 5174;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 
@@ -17,6 +19,7 @@ app.listen(PORT, async () => {
     process.exit(1); // Exit if connection fails
   }
 });
+
 
 // POST route to save text
 app.post('/text',
@@ -32,4 +35,5 @@ app.post('/text',
     res.status(201).json(newText); 
   })
 );
+
 
