@@ -5,6 +5,7 @@
     "express": "^5.1.0",
     "formidable": "^3.5.2",
     "groq-sdk": "^0.19.0",
+    "html-react-parser": "^5.2.3",
     "lamejs": "^1.2.1",
     "mongodb": "^6.15.0",
     "reac": "^0.0.0",

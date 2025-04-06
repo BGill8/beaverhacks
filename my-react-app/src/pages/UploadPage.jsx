@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleGenAI } from "@google/genai"; // Import GoogleGenAI
 import "./UploadPage.css";
+import parse from "html-react-parser";
+
 
 const ai = new GoogleGenAI({ apiKey: "AIzaSyChEaWV5Ulfb_kwIfHHUr4wH5Q4neOxXB4" }); // Initialize with your API key
 
@@ -21,7 +23,7 @@ const UploadPage = () => {
 
       const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
-        contents: "summarize the following text: " + text,
+        contents: "summarize in detailed notes (utilizing <li> and bullets to organize) as if it were an HTML file (BUT DO NOT INCLUDE DOCTYPE, HTML headers, only simple p, h1-6, and li elements. Do not include ```html at the front or ``` at the end) " + text,
       });
 
       if (response.text) {
@@ -73,9 +75,12 @@ const UploadPage = () => {
       {summary && (
         <div style={{ marginTop: "20px", textAlign: "left" }}>
           <h2>Summary:</h2>
-          <p>{summary}</p>
+          <div style={{ lineHeight: "1.6", paddingLeft: "10px", fontSize: "16px" }}>
+            {parse(summary)}
+          </div>
         </div>
       )}
+
       {backendError && (
         <div style={{ marginTop: "20px", color: "red" }}>
           <h2>Error:</h2>
