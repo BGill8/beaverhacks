@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import { GoogleGenAI } from "@google/genai";
 
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GEMINI_API_KEY });
 let connection = undefined;
 
 async function connect() {
@@ -15,6 +17,13 @@ async function connect() {
   }
 }
 
+async function geminiResp(data) {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Summarize in detailed notes: " + data,
+  });
+  console.log(response.data);
+}
 
 const textSchema = new mongoose.Schema({
   text: {
@@ -30,8 +39,9 @@ const Text = mongoose.model("text", textSchema);
 async function createText(textdata){
 
   const text = new Text(textdata);
+  geminiResp(text)
   return await text.save();
 }
 
-export { connect, createText};
+export { connect, createText, geminiResp};
 
