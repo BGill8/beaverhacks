@@ -62,9 +62,7 @@ const UploadPage = () => {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>Upload and Summarize</h1>
-      <button onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
-        Back
-      </button>
+      <button className='backButton' onClick={() => navigate(-1)}>Back</button>
       <input type="file" onChange={handleFileChange} />
       {loadingSummary && <p>Summarizing...</p>}
       {selectedFile && (
