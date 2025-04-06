@@ -1,3 +1,4 @@
+
 // pages/RecordingPage.jsx
 import { useState, useRef } from 'react';
 
@@ -101,6 +102,8 @@ function RecordingPage() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {text && <p>Server Response: {text}</p>}
+
+
     </div>
   );
 }
