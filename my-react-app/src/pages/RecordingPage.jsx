@@ -15,17 +15,6 @@ const VoiceInput = () => {
     isListening ? stopVoiceInput() : startListening();
   };
 
-  const changePauseResume = () => {
-    setIsPaused(!isPaused)
-    if (!isPaused && isListening) {
-      stopListening()
-      setTextInput((prevVal) =>
-        prevVal + (transcript.length ? (prevVal.length ? ' ' : '') + transcript : ''));
-    } else if (isPaused && !isListening) {
-      startListening()
-    }
-  }
-
   const stopVoiceInput = async () => {
     await stopListening();
     await getSpeechString(); // send transcript to backend
@@ -38,9 +27,6 @@ const VoiceInput = () => {
       <button className='backButton' onClick={() => navigate(-1)}>Back</button>
       <button onClick={startStopListening}>
         {isListening ? 'Stop Listening' : 'Speak'}
-      </button>
-      <button onClick={() => changePauseResume()}>
-        {isListening ? 'Pause' : 'Resume'}
       </button>
       <button>Convert to Notes</button>
       <textarea

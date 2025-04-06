@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleGenAI } from "@google/genai"; // Import GoogleGenAI
+import { GoogleGenAI } from "@google/genai";
 import "./UploadPage.css";
 import parse from "html-react-parser";
 
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyChEaWV5Ulfb_kwIfHHUr4wH5Q4neOxXB4" }); // Initialize with your API key
+const ai = new GoogleGenAI({ apiKey: "AIzaSyChEaWV5Ulfb_kwIfHHUr4wH5Q4neOxXB4" });
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
