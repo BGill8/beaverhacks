@@ -1,43 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleGenAI } from "@google/genai";
-import "./UploadPage.css";
+import { useGenerateSummary } from "../hooks/useGenerateSummary";
 import parse from "html-react-parser";
-
-
-const ai = new GoogleGenAI({ apiKey: "AIzaSyChEaWV5Ulfb_kwIfHHUr4wH5Q4neOxXB4" });
+import "./UploadPage.css";
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState("");
-  const [summary, setSummary] = useState("");
-  const [backendError, setBackendError] = useState("");
-  const [loadingSummary, setLoadingSummary] = useState(false);
-
+  const { summary, backendError, loadingSummary, generateBackendSummary } = useGenerateSummary();
   const navigate = useNavigate();
-
-  const generateBackendSummary = async (text) => {
-    try {
-      setLoadingSummary(true);
-      setBackendError("");
-
-      const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: "summarize in detailed notes (utilizing <li> and bullets to organize) as if it were an HTML file (BUT DO NOT INCLUDE DOCTYPE, HTML headers, only simple p, h1-6, and li elements. Do not include ```html at the front or ``` at the end) " + text,
-      });
-
-      if (response.text) {
-        setSummary(response.text);
-      } else {
-        setBackendError("Could not retrieve summary from Google Gemini API.");
-      }
-    } catch (error) {
-      console.error("Error calling Google Gemini API:", error);
-      setBackendError(`Error calling Google Gemini API: ${error.message}`);
-    } finally {
-      setLoadingSummary(false);
-    }
-  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -62,30 +33,32 @@ const UploadPage = () => {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>Upload and Summarize</h1>
-      <button className='backButton' onClick={() => navigate(-1)}>Back</button>
+      <button className="backButton" onClick={() => navigate(-1)}>
+        Back
+      </button>
       <div style={{ marginTop: "20px" }}>
-  <input
-    type="file"
-    id="fileInput"
-    style={{ display: "none" }} // Hide the default file input
-    onChange={handleFileChange}
-  />
-  <label
-    htmlFor="fileInput"
-    style={{
-      display: "inline-block",
-      padding: "10px 20px",
-      backgroundColor: "#007BFF",
-      color: "white",
-      borderRadius: "5px",
-      cursor: "pointer",
-      fontSize: "16px",
-      textAlign: "center",
-    }}
-  >
-    Choose File
-  </label>
-</div>
+        <input
+          type="file"
+          id="fileInput"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+        <label
+          htmlFor="fileInput"
+          style={{
+            display: "inline-block",
+            padding: "10px 20px",
+            backgroundColor: "#007BFF",
+            color: "white",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            textAlign: "center",
+          }}
+        >
+          Choose File
+        </label>
+      </div>
       {loadingSummary && <p>Summarizing...</p>}
       {selectedFile && (
         <p style={{ marginTop: "20px" }}>
@@ -100,7 +73,6 @@ const UploadPage = () => {
           </div>
         </div>
       )}
-
       {backendError && (
         <div style={{ marginTop: "20px", color: "red" }}>
           <h2>Error:</h2>

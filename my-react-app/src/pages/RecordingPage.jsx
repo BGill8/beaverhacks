@@ -1,45 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useSpeechToText from '../hooks/RecordingPage';
-import './RecordingPage.css'; // Import your CSS file
-import { GoogleGenAI } from "@google/genai";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useSpeechToText from "../hooks/RecordingPage";
+import { useGenerateSummary } from "../hooks/useGenerateSummary";
+import parse from "html-react-parser";
+import "./RecordingPage.css";
 
 const VoiceInput = () => {
-  const [textInput, setTextInput] = useState('');
+  const [speech, setSpeech] = useState("");
+  const { summary, backendError, loadingSummary, generateBackendSummary } = useGenerateSummary();
   const navigate = useNavigate();
 
-  const { isListening, transcript, startListening, getSpeechString, stopListening } = useSpeechToText({ continuous: true });
-  const [isPaused, setIsPaused] = useState(false)
-  
+  const { isListening, transcript, startListening, stopListening } = useSpeechToText({ continuous: true });
+
   const startStopListening = () => {
-    isListening ? stopVoiceInput() : startListening();
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
   };
 
-  const stopVoiceInput = async () => {
-    await stopListening();
-    await getSpeechString(); // send transcript to backend
-    setTextInput(""); // clear textarea properly
+  const handleConvertToNotes = async () => {
+    if (speech.trim() === "") {
+      alert("Please enter some text to summarize.");
+      return;
+    }
+    await generateBackendSummary(speech); // Call the summarization function
   };
 
   return (
     <div>
       <h1>Voice Recording</h1>
-      <button className='backButton' onClick={() => navigate(-1)}>Back</button>
-      <button onClick={startStopListening}>
-        {isListening ? 'Stop Listening' : 'Speak'}
+      <button className="backButton" onClick={() => navigate(-1)}>
+        Back
       </button>
-      <button>Convert to Notes</button>
+      <button onClick={startStopListening}>
+        {isListening ? "Stop Listening" : "Speak"}
+      </button>
+      <button onClick={handleConvertToNotes}>Convert to Notes</button>
       <textarea
         id="speech"
-        style={{ marginTop: '20px', width: '100%', height: '150px' }}
-        disabled={isListening}
-        value={
-          isListening
-            ? textInput + (transcript.length ? (textInput.length ? ' ' : '') + transcript : '')
-            : textInput
-        }
-        onChange={(e) => setTextInput(e.target.value)}
+        style={{ marginTop: "20px", width: "100%", height: "150px" }}
+        value={isListening ? speech + transcript : speech}
+        onChange={(e) => setSpeech(e.target.value)}
       />
+      {loadingSummary && <p>Summarizing...</p>}
+      {summary && (
+        <div style={{ marginTop: "20px", textAlign: "left" }}>
+          <h2>Summary:</h2>
+          <div style={{ lineHeight: "1.6", paddingLeft: "10px", fontSize: "16px" }}>
+            {parse(summary)}
+          </div>
+        </div>
+      )}
+      {backendError && (
+        <div style={{ marginTop: "20px", color: "red" }}>
+          <h2>Error:</h2>
+          <p>{backendError}</p>
+        </div>
+      )}
     </div>
   );
 };
