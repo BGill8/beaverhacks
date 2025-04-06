@@ -1,0 +1,31 @@
+{
+  "name": "restapi",
+  "version": "1.0.0",
+  "description": "A simple REST API project",
+  "main": "controller.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-modules controller.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^0.7.0",
+    "@google/generative-ai": "^0.24.0",
+    "dotenv": "^10.0.0",
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.2.1",
+    "formidable": "^3.5.2",
+    "groq-sdk": "^0.19.0",
+    "lamejs": "^1.2.1",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.5.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "Andy Bui",
+  "license": "MIT"
+}
