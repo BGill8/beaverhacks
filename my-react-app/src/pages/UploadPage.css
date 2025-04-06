@@ -16,3 +16,19 @@
 .backButton:hover {
     background-color: #b33000;
 }
+
+#fileInput {
+    padding: 10px 15px;
+    margin: 10px;
+    background-color: #ff7300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#fileInput:hover {
+    background-color: #b33000;
+
+}

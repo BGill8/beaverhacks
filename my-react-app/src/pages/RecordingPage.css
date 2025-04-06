@@ -16,3 +16,8 @@
 .backButton:hover {
     background-color: #b33000;
 }
+
+button{
+    padding: 10px 15px;
+    margin: 10px;
+}
