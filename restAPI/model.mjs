@@ -20,7 +20,7 @@ async function connect() {
 async function geminiResp(data) {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
-    contents: "Summarize in detailed notes: " + data,
+    contents: "Summarize in one sentence smartly: " + data,
   });
   console.log(response.text);
 }
