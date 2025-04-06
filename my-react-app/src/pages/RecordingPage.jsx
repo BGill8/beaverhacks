@@ -63,7 +63,7 @@ function RecordingPage() {
     try {
       const audioBlob = await fetch(audioUrl).then(r => r.blob());
       const formData = new FormData();
-      formData.append('audio', audioBlob, 'recording.webm'); // Adjust filename and type if needed
+      formData.append('audio', audioBlob, 'recording.mp3'); // Adjust filename and type if needed
 
       const response = await fetch('/api/voice', { // Your backend API endpoint for handling audio
         method: 'POST',
