@@ -20,8 +20,8 @@ const VoiceInput = () => {
   };
 
   const stopVoiceInput = async () => {
-    await stopListening();
-    await getSpeechString(); // send transcript to backend
+    getSpeechString(); // send transcript to backend
+    stopListening();
     setTextInput(""); // clear textarea properly
   };
 

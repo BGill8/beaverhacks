@@ -61,7 +61,7 @@ const useSpeechToText = (options) => {
   };
 
   const getSpeechString = async () => {
-    const string = transcript.trim();
+    const string = document.getElementById('speech').textContent
     console.log('Sending string:', string);
 
     try {
