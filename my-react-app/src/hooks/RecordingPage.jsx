@@ -60,7 +60,6 @@ const useSpeechToText = (options) => {
         }
     }
 
-    
     return {
         isListening,
         transcript,
@@ -68,6 +67,5 @@ const useSpeechToText = (options) => {
         stopListening
     }  
 }
-
 
 export default useSpeechToText
