@@ -21,8 +21,8 @@ const VoiceInput = () => {
 
   const stopVoiceInput = async () => {
     getSpeechString(); // send transcript to backend
+    setTextInput("");
     stopListening();
-    setTextInput(""); // clear textarea properly
   };
 
   return (

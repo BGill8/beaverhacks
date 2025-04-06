@@ -4,6 +4,7 @@ import beavernoteslogo from './assets/beavernotes.svg';
 import './App.css';
 import RecordingPage from './pages/RecordingPage';
 import UploadPage from './pages/UploadPage';
+import NotesPage from './pages/NotesPage';
 
 function HomePage({ setCount, count }) {
   return (
@@ -28,6 +29,10 @@ function HomePage({ setCount, count }) {
             Upload <code>.txt</code> file
           </button>
         </Link>
+        <div className="divider"></div>
+        <Link to="/notes">
+          <button>Notes</button>
+        </Link>
       </div>
     </>
   );
@@ -42,6 +47,7 @@ function App() {
         <Route path="/" element={<HomePage count={count} setCount={setCount} />} />
         <Route path="/recording" element={<RecordingPage />} />
         <Route path="/upload" element={<UploadPage />} />
+        <Route path="/notes" element={<NotesPage />} />
       </Routes>
     </BrowserRouter>
   );
