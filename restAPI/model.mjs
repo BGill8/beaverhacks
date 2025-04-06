@@ -31,21 +31,45 @@ const textSchema = new mongoose.Schema({
 
 const Text = mongoose.model("text", textSchema);
 
-
+/*
 async function geminiResp(data) {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: "Summarize in one sentence smartly: " + data,
   });
   console.log(response.text);
+
+}
+*/
+
+async function geminiResp(data) {
+  const result = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: [{ role: "user", parts: [{ text: "Summarize in one sentence smartly: " + data }] }],
+  });
+
+  const geminiText = result.candidates?.[0]?.content?.parts?.[0]?.text || 'No summary generated';
+  return geminiText;
 }
 
 
 
 async function createText(textdata){
-
+/*
   const text = new Text(textdata);
   return await text.save();
+  */
+
+    // Get Gemini note
+    const note = await geminiResp(textdata.text);
+
+    // Create with note
+    const text = new Text({
+      text: textdata.text,
+      note: note,
+    });
+  
+    return await text.save();
 }
 
 export { connect, createText, geminiResp};
