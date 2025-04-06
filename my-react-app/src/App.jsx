@@ -23,10 +23,8 @@ function HomePage({ setCount, count }) {
           <button className="record-button">Start Recording</button>
         </Link>
         <div className="divider"></div>
-        <Link to="/upload">
-          <button>
-            Upload <code>.txt</code> file
-          </button>
+        <Link to="/notes">
+          <button>Notes</button>
         </Link>
       </div>
     </>
@@ -41,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage count={count} setCount={setCount} />} />
         <Route path="/recording" element={<RecordingPage />} />
-        <Route path="/upload" element={<UploadPage />} />
+        <Route path="/notes" element={<NotesPage />} />
       </Routes>
     </BrowserRouter>
   );
